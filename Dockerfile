@@ -1,9 +1,6 @@
-FROM node:18.14-bullseye
+FROM node:18.14.0-bullseye
 
-RUN apt-get update && apt-get install -y mono-complete \
-    libhunspell-dev \
-    libmpv-dev \
-    tesseract-ocr \
+RUN apt-get update && apt-get install -y mono-runtime libmono-system-windows-forms4.0-cil \
     xvfb
 
 RUN wget -O /tmp/SE3611.zip https://github.com/SubtitleEdit/subtitleedit/releases/download/3.6.11/SE3611.zip && \
