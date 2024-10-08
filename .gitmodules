@@ -1,0 +1,3 @@
+[submodule "subtitleedit-cli"]
+	path = subtitleedit-cli
+	url = https://github.com/SubtitleEdit/subtitleedit-cli.git

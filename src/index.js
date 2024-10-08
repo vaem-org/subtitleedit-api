@@ -39,11 +39,8 @@ app.post('/:filename.:extension', wrap(async (req, res) => {
     req.on('error', reject);
   });
 
-  const child = spawn('xvfb-run', [
-    '-a',
-    'mono',
-    '/opt/subtitleedit/SubtitleEdit.exe',
-    '/convert', tempFile, 'webvtt',
+  const child = spawn('/opt/secli/seconv', [
+    tempFile, 'webvtt',
     '/encoding:utf-8'
   ], {
     stdio: 'pipe'

@@ -1,11 +1,19 @@
-FROM node:18.14.0-bullseye
+# syntax=docker/dockerfile:1
 
-RUN apt-get update && apt-get install -y mono-runtime libmono-system-windows-forms4.0-cil \
-    xvfb libmono-i18n4.0-all
+FROM node:20.18.0-alpine AS base
 
-RUN wget -O /tmp/SE3611.zip https://github.com/SubtitleEdit/subtitleedit/releases/download/3.6.11/SE3611.zip && \
-    unzip /tmp/SE3611.zip -d /opt/subtitleedit && \
-    rm /tmp/SE3611.zip
+FROM base AS build
+
+RUN apk add --no-cache dotnet6-sdk dotnet6-build
+
+COPY ./subtitleedit-cli/src /workdir/subtitleedit-cli/src
+
+WORKDIR /workdir/subtitleedit-cli/src/se-cli
+RUN dotnet publish -c release -r linux-musl-x64 --self-contained seconv.csproj
+
+FROM node:20.18.0-alpine
+
+COPY --from=build /workdir/subtitleedit-cli/src/se-cli/bin/release/net6.0/linux-musl-x64/publish /opt/secli
 
 RUN npm i -g pnpm
 
