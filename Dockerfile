@@ -13,7 +13,7 @@ RUN dotnet publish -c release -r linux-musl-x64 --self-contained seconv.csproj
 
 FROM base
 
-COPY --from=build /workdir/subtitleedit-cli/src/se-cli/bin/release/net6.0/linux-musl-x64/publish /opt/secli
+COPY --from=build /workdir/subtitleedit-cli/src/se-cli/bin/release/net8.0/linux-musl-x64/publish /opt/secli
 
 RUN corepack enable
 
